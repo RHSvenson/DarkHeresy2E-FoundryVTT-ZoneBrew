@@ -4,7 +4,7 @@ A homebrewed version of the excellent module maintaned by Vendare and created by
 
 ## Install
 1. Go to the setup page and choose **Game Systems**.
-2. Click the **Install System** button, and paste in this [manifest link](https://raw.githubusercontent.com/moo-man/DarkHeresy2E-FoundryVTT/master/system.json)
+2. Click the **Install System** button, and paste in this [manifest link](https://raw.githubusercontent.com/RHSvenson/DarkHeresy2E-FoundryVTT-ZoneBrew/master/system.json)
 3. Create a Game World using the Dark Heresy system.
 
 ## Preview
