@@ -1,18 +1,17 @@
 export class DarkHeresyActor extends Actor {
 
   async _preCreate(data, options, user) {
-    
     let initData = {
       "prototypeToken.bar1": { attribute: "wounds" },
       "prototypeToken.bar2": { attribute: "fate" },
       "prototypeToken.name": data.name,
-      "prototypeToken.displayName" : CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
-      "prototypeToken.displayBars" : CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
-            
+      "prototypeToken.displayName": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
+      "prototypeToken.displayBars": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+
     };
     if (data.type === "acolyte") {
-      initData["prototypeToken.actorLink"] = true;      
-      initData["prototypeToken.disposition"] = CONST.TOKEN_DISPOSITIONS.FRIENDLY
+      initData["prototypeToken.actorLink"] = true;
+      initData["prototypeToken.disposition"] = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
     }
     this.updateSource(initData);
   }
@@ -124,15 +123,15 @@ export class DarkHeresyActor extends Actor {
     let toughness = this.characteristics.toughness;
 
     this.system.armour = locations
-              .reduce((accumulator, location) =>
-                Object.assign(accumulator,
-                  {
-                    [location]: {
-                      total: toughness.bonus,
-                      toughnessBonus: toughness.bonus,
-                      value: 0
-                    }
-                  }), {});
+      .reduce((accumulator, location) =>
+        Object.assign(accumulator,
+          {
+            [location]: {
+              total: toughness.bonus,
+              toughnessBonus: toughness.bonus,
+              value: 0
+            }
+          }), {});
 
     // Object for storing the max armour
     let maxArmour = locations
@@ -144,22 +143,22 @@ export class DarkHeresyActor extends Actor {
       .filter(item => item.isArmour && !item.isAdditive)
       .reduce((acc, armour) => {
         locations.forEach(location => {
-            let armourVal = armour.part[location] || 0;
-            if (armourVal > acc[location]) {
-              acc[location] = armourVal;
-            }
-          });
+          let armourVal = armour.part[location] || 0;
+          if (armourVal > acc[location]) {
+            acc[location] = armourVal;
+          }
+        });
         return acc;
       }, maxArmour);
 
     this.items
       .filter(item => item.isArmour && item.isAdditive)
       .forEach(armour => {
-         locations.forEach(location =>{
-            let armourVal = armour.part[location] || 0;
-            maxArmour[location] += armourVal;
-         });
-      });  
+        locations.forEach(location => {
+          let armourVal = armour.part[location] || 0;
+          maxArmour[location] += armourVal;
+        });
+      });
 
     this.armour.head.value = maxArmour.head;
     this.armour.leftArm.value = maxArmour.leftArm;
@@ -452,7 +451,7 @@ export class DarkHeresyActor extends Actor {
     });
     ChatMessage.create({ content: html });
   }
-  
+
   get attributeBoni() {
     let boni = [];
     for (let characteristic of Object.values(this.characteristics)) {

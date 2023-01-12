@@ -148,8 +148,12 @@ async function _rollDamage(rollData) {
 
 /**
  * Roll and compute damage.
+ * @param damageFormula
  * @param {number} penetration
  * @param {object} rollData
+ * @param dos
+ * @param isAiming
+ * @param weaponTraits
  * @returns {object}
  */
 async function _computeDamage(damageFormula, penetration, dos, isAiming, weaponTraits) {
@@ -167,7 +171,7 @@ async function _computeDamage(damageFormula, penetration, dos, isAiming, weaponT
   };
 
   if (weaponTraits.accurate && isAiming) {
-    let numDice = ~~((dos - 1) / 2); //-1 because each degree after the first counts
+    let numDice = ~~((dos - 1) / 2); // -1 because each degree after the first counts
     if (numDice >= 1) {
       if (numDice > 2) numDice = 2;
       let ar = new Roll(`${numDice}d10`);
@@ -468,8 +472,8 @@ async function _sendToChat(rollData) {
       "dark-heresy.rollData": rollData
     }
   };
-  
-  if(speaker.token) {
+
+  if (speaker.token) {
     rollData.tokenId = speaker.token;
   }
 

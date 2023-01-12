@@ -38,14 +38,14 @@ Hooks.once("init", () => {
     testInit: {
       prepareCommonRoll,
       prepareCombatRoll,
-      preparePsychicPowerRoll,
+      preparePsychicPowerRoll
     },
-    tests:{
+    tests: {
       commonRoll,
       combatRoll
     }
   };
-  game.macro = DhMacroUtil; 
+  game.macro = DhMacroUtil;
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("dark-heresy", AcolyteSheet, { types: ["acolyte"], makeDefault: true });
   Actors.registerSheet("dark-heresy", NpcSheet, { types: ["npc"], makeDefault: true });
@@ -82,8 +82,8 @@ Hooks.once("init", () => {
 Hooks.once("ready", () => {
   migrateWorld();
   CONFIG.ChatMessage.documentClass.prototype.getRollData = function() {
-      return this.getFlag("dark-heresy", "rollData") 
-  }
+    return this.getFlag("dark-heresy", "rollData");
+  };
 });
 
 
@@ -100,7 +100,7 @@ Hooks.on("getChatLogEntryContext", chat.showRolls);
 Hooks.on("hotbarDrop", (bar, data, slot) => {
   if (data.type == "Item" || data.type == "Actor")
   {
-      DhMacroUtil.createMacro(data, slot)
-      return false
+    DhMacroUtil.createMacro(data, slot);
+    return false;
   }
 });
