@@ -10,7 +10,7 @@
     "maximum" : 10
   },
   "templateVersion": 2,
-  "author": "JeansenVaars, Moo Man, fredthedeadhead, Perfectro, Vendare, Silver292, Giddy",
+  "author": "JeansenVaars, Moo Man, fredthedeadhead, Perfectro, Vendare, Silver292, Giddy, Zoneling",
   "scripts": [],
   "esmodules": [
     "script/common/hooks.js"
@@ -53,9 +53,9 @@
   "gridUnits": "m",
   "primaryTokenAttribute": null,
   "secondaryTokenAttribute": null,
-  "url": "https://github.com/moo-man/DarkHeresy2E-FoundryVTT",
+  "url": "https://github.com/RHSvenson/DarkHeresy2E-FoundryVTT-ZoneBrew",
   "socket": true,
-  "manifest": "https://github.com/moo-man/DarkHeresy2E-FoundryVTT/releases/download/4.1.2/system.json",
-  "download": "https://github.com/moo-man/DarkHeresy2E-FoundryVTT/releases/download/4.1.2/dark-heresy.zip",
+  "manifest": "https://github.com/RHSvenson/DarkHeresy2E-FoundryVTT-ZoneBrew/releases/download/4.1.2/system.json",
+  "download": "https://github.com/RHSvenson/DarkHeresy2E-FoundryVTT-ZoneBrew/releases/download/4.1.2/dark-heresy.zip",
   "license": "LICENSE.txt"
 }

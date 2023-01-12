@@ -1,10 +1,6 @@
-# Dark Heresy 2E - Continued
+# Dark Heresy 2E - ZoneBrew
 
-An **UNOFFICIAL** system for playing Dark Heresy 2E on [Foundry VTT](https://foundryvtt.com/).
-
-It provides support for **character sheets only**, game content should be drawn from official source books.
-
-The project is being continued under the GPL-3.0 License after the original author deleted their project.
+A homebrewed version of the excellent module maintaned by Vendare and created by moo-man.
 
 ## Install
 1. Go to the setup page and choose **Game Systems**.
