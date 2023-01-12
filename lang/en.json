@@ -47,6 +47,7 @@
   "ARMOUR.CRAFTSMANSHIP": "Craftsmanship",
   "ARMOUR.AVAILABILITY": "Availability",
   "ARMOUR.IS_ADDITIVE": "Additive to other Armour",
+  "ARMOUR.IS_SHATTERABLE": "Can be shattered",
 
   "ARMOUR_TYPE.BASIC": "Basic",
   "ARMOUR_TYPE.FLAK": "Flak",

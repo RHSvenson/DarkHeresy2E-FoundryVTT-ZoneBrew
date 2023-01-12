@@ -267,6 +267,8 @@ export class DarkHeresyItem extends Item {
 
   get isAdditive() { return this.system.isAdditive; }
 
+  get isShatterable() { return this.system.isShatterable; }
+
   get craftsmanship() { return this.system.craftsmanship;}
 
   get description() { return this.system.description;}
