@@ -972,7 +972,6 @@
       "templates": [ "equipment" ],
       "type": "basic",
       "isAdditive": false,
-      "isShatterable": false,
       "part": {
         "head": 0,
         "leftArm": 0,
