@@ -138,9 +138,15 @@ export class DarkHeresyActor extends Actor {
       .reduce((acc, location) =>
         Object.assign(acc, { [location]: 0 }), {});
 
-    // For each item, find the maximum armour val per location
+    // Object for storing armour types on location
+    let armourType = locations
+      .reduce((acc, location) =>
+        Object.assign(acc, { [location]: 'Basic'}), {})
+
+    // For each item, find the maximum armour val per location of equipped armour
+    // TODO: Make item a remembered variable, for working with future shatter mechanic.
     this.items
-      .filter(item => item.isArmour && !item.isAdditive)
+      .filter(item => item.isArmour && item.isEquipped && !item.isAdditive)
       .reduce((acc, armour) => {
         locations.forEach(location => {
           let armourVal = armour.part[location] || 0;
@@ -152,13 +158,23 @@ export class DarkHeresyActor extends Actor {
       }, maxArmour);
 
     this.items
-      .filter(item => item.isArmour && item.isAdditive)
+      .filter(item => item.isArmour && item.isEquipped && item.isAdditive)
       .forEach(armour => {
         locations.forEach(location => {
           let armourVal = armour.part[location] || 0;
           maxArmour[location] += armourVal;
         });
       });
+
+    // Also check all slots if any equipped items have special traits or types that are relevant for damage calculation.
+    // TODO: Add check for armour mods when those are added as well.
+    this.items
+      .filter(item => item.isArmour && item.isEquipped)
+      .forEach(armour => {
+        locations.forEach(location => {
+          armourType[location] = armour.type
+        })
+      })
 
     this.armour.head.value = maxArmour.head;
     this.armour.leftArm.value = maxArmour.leftArm;
@@ -173,6 +189,13 @@ export class DarkHeresyActor extends Actor {
     this.armour.body.total += this.armour.body.value;
     this.armour.leftLeg.total += this.armour.leftLeg.value;
     this.armour.rightLeg.total += this.armour.rightLeg.value;
+
+    this.armour.head.type = armourType.head;
+    this.armour.leftArm.type = armourType.leftArm;
+    this.armour.rightArm.type = armourType.rightArm
+    this.armour.body.type = armourType.body
+    this.armour.leftLeg.type = armourType.leftLeg
+    this.armour.rightArm.type = armourType.rightLeg
   }
 
   _computeMovement() {
@@ -330,7 +353,7 @@ export class DarkHeresyActor extends Actor {
     // Apply damage from multiple hits
     for (const damage of damages) {
       // Get the armour for the location and minus penetration, no negatives
-      let armour = Math.max(this._getArmour(damage.location) - Number(damage.penetration), 0);
+      let armour = Math.max(this._getArmour(damage.location, damage.type) - Number(damage.penetration), 0);
       // Reduce damage by toughness bonus
       const damageMinusToughness = Math.max(Number(damage.amount) - this.system.characteristics.toughness.bonus, 0);
 
@@ -393,10 +416,7 @@ export class DarkHeresyActor extends Actor {
    * @param {number} damage amount of damage dealt
    * @param {object} damageObject damage object containing location and type
    * @param {string} damageObject.location damage location
-   * @param {string} damageObject.type damage type
-   * @param {string} source source of the damage
-   */
-  _recordDamage(damageRolls, damage, damageObject, source) {
+   * @param {string} damageObject.type damage type including toughness bonus for a non-localized location string
     damageRolls.push({
       damage,
       source,
@@ -408,24 +428,37 @@ export class DarkHeresyActor extends Actor {
   /**
    * Gets the armour value not including toughness bonus for a non-localized location string
    * @param {string} location
+   * @param {string} type
    * @returns {number} armour value for the location
    */
-  _getArmour(location) {
+  _getArmour(location, type) {
     switch (location) {
       case "ARMOUR.HEAD":
-        return this.armour.head.value;
+        return this.armour.head.value - this._checkArmourType(this.armour.head.type, type);
       case "ARMOUR.LEFT_ARM":
-        return this.armour.leftArm.value;
+        return this.armour.leftArm.value - this._checkArmourType(this.armour.leftArm.type, type);
       case "ARMOUR.RIGHT_ARM":
-        return this.armour.rightArm.value;
+        return this.armour.rightArm.value - this._checkArmourType(this.armour.rightArm.type, type);
       case "ARMOUR.BODY":
-        return this.armour.body.value;
+        return this.armour.body.value - this._checkArmourType(this.armour.body.type, type);
       case "ARMOUR.LEFT_LEG":
-        return this.armour.leftLeg.value;
+        return this.armour.leftLeg.value - this._checkArmourType(this.armour.leftArm.type, type);
       case "ARMOUR.RIGHT_LEG":
-        return this.armour.rightLeg.value;
+        return this.armour.rightLeg.value - this._checkArmourType(this.armour.rightLeg.type, type);
       default:
         return 0;
+    }
+  }
+
+  /**
+   * Checks if the damage type has any interactions relevant for the damage type.
+   * @param {array} armourType the sum types of equipped armours on the location
+   * @param {string} damageType the damage type of the incoming damage
+   * @returns {number} damage modifier to apply to the calculation
+   */
+  _checkArmourType(armourType, damageType) {
+    if (armourType.includes("ARMOUR_TYPE.FLAK") && damageType == "DAMAGE_TYPE.EXPLOSIVE" ) {
+      return 1;
     }
   }
 
