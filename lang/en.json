@@ -47,7 +47,7 @@
   "ARMOUR.CRAFTSMANSHIP": "Craftsmanship",
   "ARMOUR.AVAILABILITY": "Availability",
   "ARMOUR.IS_ADDITIVE": "Additive to other Armour",
-
+  "ARMOUR.IS_EQUIPPED": "Equipped?",
   "ARMOUR_TYPE.BASIC": "Basic",
   "ARMOUR_TYPE.FLAK": "Flak",
   "ARMOUR_TYPE.MESH": "Mesh",
