@@ -141,10 +141,10 @@ export class DarkHeresyActor extends Actor {
     // Object for storing armour types on location
     let armourType = locations
       .reduce((acc, location) =>
-        Object.assign(acc, { [location]: 'basic'}), {});
+        Object.assign(acc, { [location]: ['basic']}), {});
 
-    // For each item, find the maximum armour val per location of equipped armour
-    // TODO: Make item a remembered variable, for working with future shatter mechanic.
+    // For each item, find the maximum armour val and type of each armour.
+    // TODO: Add check for armour mods when those are added as well.
     this.items
       .filter(item => item.isArmour && item.isEquipped && !item.isAdditive)
       .reduce((acc, armour) => {
@@ -152,6 +152,7 @@ export class DarkHeresyActor extends Actor {
           let armourVal = armour.part[location] || 0;
           if (armourVal > acc[location]) {
             acc[location] = armourVal;
+            armourType[location][0] = armour.system.type;
           }
         });
         return acc;
@@ -163,16 +164,7 @@ export class DarkHeresyActor extends Actor {
         locations.forEach(location => {
           let armourVal = armour.part[location] || 0;
           maxArmour[location] += armourVal;
-        });
-      });
-
-    // Also check all slots if any equipped items have special traits or types that are relevant for damage calculation.
-    // TODO: Add check for armour mods when those are added as well.
-    this.items
-      .filter(item => item.isArmour && item.isEquipped)
-      .forEach(armour => {
-        locations.forEach(location => {
-          armourType[location] = armour.type;
+          armourType[location].push(armour.system.type);
         });
       });
 
