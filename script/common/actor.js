@@ -380,6 +380,7 @@ export class DarkHeresyActor extends Actor {
       }
     }
 
+
     // Update the Actor
     const updates = {
       "system.wounds.value": wounds,
@@ -409,6 +410,8 @@ export class DarkHeresyActor extends Actor {
    * @param {object} damageObject damage object containing location and type
    * @param {string} damageObject.location damage location
    * @param {string} damageObject.type damage type including toughness bonus for a non-localized location string
+   */
+   _recordDamage(damageRolls, damage, damageObject, source) {
     damageRolls.push({
       damage,
       source,
@@ -449,8 +452,11 @@ export class DarkHeresyActor extends Actor {
    * @returns {number} damage modifier to apply to the calculation
    */
   _checkArmourType(armourType, damageType) {
-    if (armourType.includes("ARMOUR_TYPE.FLAK") && damageType == "DAMAGE_TYPE.EXPLOSIVE" ) {
-      return 1;
+    if (armourType.includes("flak") && damageType === 'X'){
+      return -1;
+    }
+    else {
+      return 0;
     }
   }
 
