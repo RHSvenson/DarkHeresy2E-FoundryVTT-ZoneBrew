@@ -141,7 +141,7 @@ export class DarkHeresyActor extends Actor {
     // Object for storing armour types on location
     let armourType = locations
       .reduce((acc, location) =>
-        Object.assign(acc, { [location]: 'Basic'}), {})
+        Object.assign(acc, { [location]: 'basic'}), {});
 
     // For each item, find the maximum armour val per location of equipped armour
     // TODO: Make item a remembered variable, for working with future shatter mechanic.
@@ -172,9 +172,9 @@ export class DarkHeresyActor extends Actor {
       .filter(item => item.isArmour && item.isEquipped)
       .forEach(armour => {
         locations.forEach(location => {
-          armourType[location] = armour.type
-        })
-      })
+          armourType[location] = armour.type;
+        });
+      });
 
     this.armour.head.value = maxArmour.head;
     this.armour.leftArm.value = maxArmour.leftArm;
@@ -193,9 +193,9 @@ export class DarkHeresyActor extends Actor {
     this.armour.head.type = armourType.head;
     this.armour.leftArm.type = armourType.leftArm;
     this.armour.rightArm.type = armourType.rightArm
-    this.armour.body.type = armourType.body
-    this.armour.leftLeg.type = armourType.leftLeg
-    this.armour.rightArm.type = armourType.rightLeg
+    this.armour.body.type = armourType.body;
+    this.armour.leftLeg.type = armourType.leftLeg;
+    this.armour.rightLeg.type = armourType.rightLeg;
   }
 
   _computeMovement() {
