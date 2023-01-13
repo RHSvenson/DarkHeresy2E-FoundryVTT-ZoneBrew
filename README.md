@@ -2,6 +2,10 @@
 
 A homebrewed version of the excellent module maintaned by Vendare and created by moo-man.
 
+## Current Differences
+### Automation
+Automation for Flak armour's (slightly homebrewed) AP bonus against explosive damage (it's normally against blast weapons, but this makes more sense IMO). 
+
 ## Install
 1. Go to the setup page and choose **Game Systems**.
 2. Click the **Install System** button, and paste in this [manifest link](https://raw.githubusercontent.com/RHSvenson/DarkHeresy2E-FoundryVTT-ZoneBrew/master/system.json)
